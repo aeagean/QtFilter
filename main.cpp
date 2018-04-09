@@ -2,22 +2,20 @@
 #include <QVariantMap>
 #include <QDebug>
 
-typedef bool (*FilterFun)(QVariant);
+class Filter;
 
-static bool filter1(QVariant var) { return (var.toInt() > 5); }
-static bool filter2(QVariant var) { return (var.toInt() > 7); }
+typedef bool (Filter::*FilterFun)(QVariant);
 
-template <typename T>
 class Filter {
 public:
     Filter() { }
 
-    static QList<QVariant> filter(QList<QVariant> datalist, QList<T> filterList) {
+    QList<QVariant> filter(Filter* obj, QList<QVariant> datalist, QList<FilterFun> filterList) {
         for (int i = 0; i < filterList.count(); i++) {
-           T filterFun= filterList.at(i);
+           FilterFun filterFun = filterList.at(i);
 
             for (int index = 0; index < datalist.count(); index++) {
-                bool status = filterFun(datalist.first());
+                bool status = obj->*filterFun(datalist.first());
                 if (!status) {
                     datalist.removeFirst();
                     index = 0;
@@ -28,6 +26,9 @@ public:
         qDebug()<<datalist;
         return datalist;
     }
+
+    bool filter1(QVariant var) { return (var.toInt() > 5); }
+    bool filter2(QVariant var) { return (var.toInt() > 7); }
 };
 
 int main(int argc, char *argv[])
@@ -35,12 +36,13 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     QList<FilterFun> filterList;
-    filterList<<filter1<<filter2;
+    filterList<<&Filter::filter1;//<<filter2;
 
     QList<QVariant> datalist;
     datalist<<1<<2<<3<<4<<5<<6<<7<<8<<9<<10;
 
-    Filter<FilterFun>::filter(datalist, filterList);
+    Filter fil;
+    fil.filter(&fil, datalist, filterList);
 
     return a.exec();
 }
