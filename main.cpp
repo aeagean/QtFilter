@@ -80,10 +80,6 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QMap<QString, FilterFun> filterFunMap;
-    filterFunMap["filterAge"] = filterAge;
-    filterFunMap["filterSex"] = filterSex;
-
     QList<QVariant> datalist;
     datalist.append(QVariant::fromValue(Persion(1, false)));
     datalist.append(QVariant::fromValue(Persion(2, false)));
@@ -91,6 +87,10 @@ int main(int argc, char *argv[])
     datalist.append(QVariant::fromValue(Persion(1, true)));
     datalist.append(QVariant::fromValue(Persion(2, true)));
     datalist.append(QVariant::fromValue(Persion(3, true)));
+
+    QMap<QString, FilterFun> filterFunMap;
+    filterFunMap["filterAge"] = filterAge;
+    filterFunMap["filterSex"] = filterSex;
 
     QVariantMap filterAgeDataMap;
     filterAgeDataMap["type"] = "age";
