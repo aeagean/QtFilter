@@ -1,3 +1,12 @@
+/*
+ *  Copyright (C) 2018
+ *  All rights reserved
+ *
+ *  Created by Strong at  2018/04/10 20:31:56
+ *  Email: 2088201923@qq.com
+ */
+
+
 #include <QCoreApplication>
 #include <QVariantMap>
 #include <QDebug>
@@ -53,6 +62,7 @@ public:
     bool m_sex;
 };
 
+/* 注意：转换为QVariant类型，自编类需要这样做 */
 Q_DECLARE_METATYPE(Persion)
 
 /* 过滤函数，过滤年龄，传入Qvariant数据与QVariantMap的字段进行比较 */
