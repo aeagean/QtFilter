@@ -1,11 +1,20 @@
+/*
+ *  Copyright (C) 2018
+ *  All rights reserved
+ *
+ *  Created by Strong at  2018/04/10 20:31:56
+ *  Email: 2088201923@qq.com
+ */
 #ifndef FILTER_H
 #define FILTER_H
 
 #include <QVariantMap>
 #include <QDebug>
 
+/* 过滤函数必须按此格式写 */
 typedef bool (*FilterFun)(QVariant, QVariantMap);
 
+/* T == FilterFun */
 template <typename T>
 class Filter {
 public:
@@ -15,7 +24,6 @@ public:
      * arg2:过滤器函数;
      * arg3: 对应的过滤器函数的判断字段.
      */
-
     static QList<QVariant> filter(QList<QVariant> datalist, QMap<QString, T> filterFunMap, QMap<QString, QVariantMap > filterDataMap)
     {
         QMapIterator<QString, T> i(filterFunMap);

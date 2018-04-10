@@ -1,11 +1,3 @@
-/*
- *  Copyright (C) 2018
- *  All rights reserved
- *
- *  Created by Strong at  2018/04/10 20:31:56
- *  Email: 2088201923@qq.com
- */
-
 #include <QCoreApplication>
 #include "Filter.h"
 
