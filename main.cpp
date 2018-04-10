@@ -71,7 +71,9 @@ int main(int argc, char *argv[])
     filterDataMap["filterAge"] = filterAgeDataMap;
     filterDataMap["filterSex"] = filterSexDataMap;
 
-    QList<QVariant> resultList = Filter<FilterFun>::filter(datalist, filterFunMap, filterDataMap);
+    QList<QVariant> resultList = Filter<FilterFun>::filter(datalist,
+                                                           filterFunMap,
+                                                           filterDataMap);
 
     for (int i = 0; i < resultList.count(); i++) {
         Persion persion = resultList.at(i).value<Persion>();

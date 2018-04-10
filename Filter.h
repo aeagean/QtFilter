@@ -24,7 +24,9 @@ public:
      * arg2:过滤器函数;
      * arg3: 对应的过滤器函数的判断字段.
      */
-    static QList<QVariant> filter(QList<QVariant> datalist, QMap<QString, T> filterFunMap, QMap<QString, QVariantMap > filterDataMap)
+    static QList<QVariant> filter(QList<QVariant> datalist,
+                                  QMap<QString, T> filterFunMap,
+                                  QMap<QString, QVariantMap > filterDataMap)
     {
         QMapIterator<QString, T> i(filterFunMap);
         while (i.hasNext()) {
