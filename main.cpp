@@ -29,16 +29,14 @@ public:
             if (map.isEmpty())
                 continue;
 
-            for (int index = 0; index < datalist.count();) {
+            QList<QVariant> tempDatalist;
+            for (int index = 0; index < datalist.count(); index++) {
                 bool status = value(datalist.at(index), map);
-                if (!status) {
-                    datalist.removeAt(index);
-                    index = 0;
-                }
-                else {
-                    index++;
-                }
+                if (status)
+                    tempDatalist.append(datalist.at(index));
             }
+
+            datalist = tempDatalist;
         }
 
         return datalist;
@@ -57,8 +55,12 @@ public:
 
 Q_DECLARE_METATYPE(Persion)
 
+/* 过滤函数，过滤年龄，传入Qvariant数据与QVariantMap的字段进行比较 */
 static bool filterAge(QVariant var, QVariantMap filterDataMap) {
     Persion persion = var.value<Persion>();
+
+    if (!filterDataMap["low"].isValid() || !filterDataMap["high"].isValid())
+        return false;
 
     if (persion.m_age >= filterDataMap["low"].toInt() &&
         persion.m_age <= filterDataMap["high"].toInt())
@@ -67,10 +69,14 @@ static bool filterAge(QVariant var, QVariantMap filterDataMap) {
         return false;
 }
 
+/* 过滤函数，过滤年龄，传入Qvariant数据与QVariantMap的字段进行比较 */
 static bool filterSex(QVariant var, QVariantMap filterDataMap) {
     Persion persion = var.value<Persion>();
 
-    if (persion.m_sex >= filterDataMap["sex"].toBool())
+    if (!filterDataMap["sex"].isValid())
+        return false;
+
+    if (persion.m_sex == filterDataMap["sex"].toBool())
         return true;
     else
         return false;
